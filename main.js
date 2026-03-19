@@ -29,26 +29,26 @@ const cities = [
 // ====================
 function renderDate() {
   //年月日取得
-    const today = new Date();
+  const today = new Date();
 
-    let year = today.getFullYear();//年
-    let month = String(today.getMonth() +1).padStart(2, '0');//月
-    let day = String(today.getDate()).padStart(2, '0');//日
+  let year = today.getFullYear();//年
+  let month = String(today.getMonth() +1).padStart(2, '0');//月
+  let day = String(today.getDate()).padStart(2, '0');//日
 
-    //曜日取得
-    const Week = ["日","月","火","水","木","金","土"];
-    const w = Week[today.getDay()];
+  //曜日取得
+  const Week = ["日","月","火","水","木","金","土"];
+  const w = Week[today.getDay()];
 
-    dateEl.textContent = `${year}/${month}/${day} （${w}）`;
+  dateEl.textContent = `${year}/${month}/${day} （${w}）`;
 
-    //曜日で色変更
-    if (w === "日") {
-      dateEl.style.color = "red";
-    } else if (w === "土") {
-      dateEl.style.color = "blue";
-    } else {
-      dateEl.style.color = "black";
-    }
+  //曜日で色変更
+  if (w === "日") {
+    dateEl.style.color = "red";
+  } else if (w === "土") {
+    dateEl.style.color = "blue";
+  } else {
+    dateEl.style.color = "black";
+  }
 }
 
 // ====================
@@ -179,66 +179,66 @@ function clearAnimations() {
 // ====================
 function renderWeather(data) {
 
-    //天気で背景変更
-    const main = data.weather[0].main;
+  //天気で背景変更
+  const main = data.weather[0].main;
 
-    //Dateオブジェクトから｢時｣｢分｣の数値を取り出す
-    //時刻を2桁表示
-    const now = new Date();//現在時刻
-    const hour = now.getHours();//時
-    const min = String(now.getMinutes()).padStart(2, '0');//分
-    const displayHour = String(hour).padStart(2, "0");// 表示専用
+  //Dateオブジェクトから｢時｣｢分｣の数値を取り出す
+  //時刻を2桁表示
+  const now = new Date();//現在時刻
+  const hour = now.getHours();//時
+  const min = String(now.getMinutes()).padStart(2, '0');//分
+  const displayHour = String(hour).padStart(2, "0");// 表示専用
 
-    setBackground(main, hour);//背景変更
+  setBackground(main, hour);//背景変更
     
-    clearAnimations();
+  clearAnimations();
     
-    //天気アイコン追加
-    let weatherIcon = "";
-    //天気用コメント
-    let comment = "";
+  //天気アイコン追加
+  let weatherIcon = "";
+  //天気用コメント
+  let comment = "";
 
-    if (main === "Clear") {
-      weatherIcon = "☀️";
-      createSun();
-      comment = getRandom(clearComments);
-    } 
-    else if (main === "Rain") {
-      weatherIcon = "☔";
-      createRain();
-      comment = getRandom(rainComments);
-    } 
-    else if (main === "Clouds") {
-      weatherIcon = "☁️";
-      createClouds();
-      comment = "過ごしやすいかも？";
-    }
-    else if (main === "Snow") {
-      weatherIcon = "❄️";
-      createSnow();
-      comment = "滑りやすいので足元注意！"
-    } 
-    else {
-      weatherIcon = "🌈";
-      comment = "今日もいい一日を✨";
-    }
+  if (main === "Clear") {
+    weatherIcon = "☀️";
+    createSun();
+    comment = getRandom(clearComments);
+  } 
+  else if (main === "Rain") {
+    weatherIcon = "☔";
+    createRain();
+    comment = getRandom(rainComments);
+  } 
+  else if (main === "Clouds") {
+    weatherIcon = "☁️";
+    createClouds();
+    comment = "過ごしやすいかも？";
+  }
+  else if (main === "Snow") {
+    weatherIcon = "❄️";
+    createSnow();
+    comment = "滑りやすいので足元注意！"
+  } 
+  else {
+    weatherIcon = "🌈";
+    comment = "今日もいい一日を✨";
+  }
     
-    //アイコン取得
-    const icon = data.weather[0].icon;
-    const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+  //アイコン取得
+  const icon = data.weather[0].icon;
+  const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
-    //表示&都市名表示
-    weatherEl.innerHTML = `
-      <img src="${iconUrl}">
-      <p>${weatherIcon} 天気 : ${data.weather[0].description}</p>
-      <p class="comment">${comment}</p>
-      <p>🌡 気温 : ${data.main.temp}℃</p>
-      <p>🤔 体感 : ${data.main.feels_like}℃</p>
-      <p>💧 湿度 : ${data.main.humidity}%</p>
-      <p>🍃 風速 : ${data.wind.speed}m/s</p>
-      <p>📍 ${data.displayName || data.name}</p>
-      <p>🕒 最終更新 : ${displayHour}:${min}</p>
-    `;
+  //表示&都市名表示
+  weatherEl.innerHTML = `
+    <img src="${iconUrl}">
+    <p>${weatherIcon} 天気 : ${data.weather[0].description}</p>
+    <p class="comment">${comment}</p>
+    <p>🌡 気温 : ${data.main.temp}℃</p>
+    <p>🤔 体感 : ${data.main.feels_like}℃</p>
+    <p>💧 湿度 : ${data.main.humidity}%</p>
+    <p>🍃 風速 : ${data.wind.speed}m/s</p>
+    <p>📍 ${data.displayName || data.name}</p>
+    <p>🕒 最終更新 : ${displayHour}:${min}</p>
+  `;
 } 
 
 // ====================
